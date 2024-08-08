@@ -6,8 +6,8 @@ import 'package:analyzer/dart/ast/ast.dart';
 
 import 'package:analyzer_query/mini/log.dart';
 import 'package:analyzer_query/mini/visitor.dart';
+import 'package:analyzer_query/proj_path/dart_file.dart';
 import 'package:dart_style/dart_style.dart';
-import 'package:proj_path/dart_file.dart';
 import 'package:pub_semver/pub_semver.dart';
 
 void execMinVisitor() {
