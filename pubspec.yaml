@@ -11,7 +11,12 @@ publish_to: none
 dependencies:
   flutter:
     sdk: flutter
+  analyzer: 6.2.0 #语法树解析
+  dart_style: 2.3.4 #代码自动格式化
   cupertino_icons: ^1.0.6
+  pub_semver: 2.1.4
+  proj_path:
+    path: ./plugin/proj_path
 
 dev_dependencies:
   flutter_test:
