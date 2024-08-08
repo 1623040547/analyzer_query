@@ -2,11 +2,12 @@ import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:analyzer/src/dart/ast/ast.dart';
 
 class FullVisitor extends SimpleAstVisitor {
-  final Function(AstNodeImpl) visit;
+  final Function(AstNode) visit;
+
 
   FullVisitor(this.visit);
 
-  void _forward(node) {
+  void _forward(AstNode node) {
     visit.call(node);
     node.visitChildren(this);
   }

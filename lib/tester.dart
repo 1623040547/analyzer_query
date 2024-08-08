@@ -1,25 +1,25 @@
 import 'dart:io';
 
 import 'package:analyzer/dart/analysis/utilities.dart';
+import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer_query/full_visitor.dart';
 import 'package:analyzer_query/mini/log.dart';
-import 'package:analyzer/src/dart/ast/ast.dart';
 
 class TestFile {
   final String _dartString;
 
-  final Function(AstNodeImpl)? _visit;
+  final Function(AstNode)? _visit;
 
   late final List<TestToken> tokens;
 
-  TestFile._(this._dartString, {dynamic Function(AstNodeImpl)? visit})
+  TestFile._(this._dartString, {dynamic Function(AstNode)? visit})
       : _visit = visit {
     tokens = _testString(_dartString);
   }
 
   static TestFile fromString(
     String dartString, {
-    Function(AstNodeImpl)? visit,
+    Function(AstNode)? visit,
   }) {
     return TestFile._(
       dartString,
@@ -29,7 +29,7 @@ class TestFile {
 
   static TestFile fromFile(
     String filePath, {
-    Function(AstNodeImpl)? visit,
+    Function(AstNode)? visit,
   }) {
     return TestFile._(
       File(filePath).readAsStringSync(),
