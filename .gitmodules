@@ -1,0 +1,3 @@
+[submodule "plugin/proj_path"]
+	path = plugin/proj_path
+	url = https://github.com/1623040547/proj_path.git
