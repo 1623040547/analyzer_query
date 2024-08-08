@@ -2,13 +2,13 @@ import 'dart:io';
 
 import 'package:analyzer/dart/analysis/features.dart';
 import 'package:analyzer/dart/analysis/utilities.dart';
+import 'package:analyzer/dart/ast/ast.dart';
 
 import 'package:analyzer_query/mini/log.dart';
 import 'package:analyzer_query/mini/visitor.dart';
 import 'package:dart_style/dart_style.dart';
 import 'package:proj_path/dart_file.dart';
 import 'package:pub_semver/pub_semver.dart';
-import 'package:analyzer/src/dart/ast/ast.dart';
 
 void execMinVisitor() {
   rootDart
@@ -37,9 +37,9 @@ void execMinVisitor() {
   result.unit.visitChildren(MinVisitor((declaration) {
     if (declaration.name.toString() == "SimpleAstVisitor") {
       for (var member in declaration.members) {
-        if (member is MethodDeclarationImpl) {
+        if (member is MethodDeclaration) {
           final node = member.parameters?.parameters.first;
-          if (node is SimpleFormalParameterImpl && node.type != null) {
+          if (node is SimpleFormalParameter && node.type != null) {
             nodes.add(node.type.toString());
           }
         }
