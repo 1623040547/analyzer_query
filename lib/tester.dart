@@ -49,7 +49,7 @@ class TestFile {
             name: dartString.substring(node.offset, node.end),
             type: node.runtimeType,
           );
-          String? id = node.parent?.id;
+          String? id = node.parent?.testId;
           if (tokens.containsKey(id)) {
             tokens[id]?._isLeaf = false;
           }
@@ -111,6 +111,6 @@ class TestToken {
   });
 }
 
-extension on AstNode {
-  String get id => '${runtimeType}_${offset}_$end';
+extension AstNodeTestTokenId on AstNode {
+  String get testId => '${runtimeType}_${offset}_$end';
 }
