@@ -74,6 +74,12 @@ class PackageConfig {
 }
 
 ///定义包信息
+///- [isMainProj] 是否为[Platform.script]所在项目
+///- [isThirdLib] 在 <b>project/.dart_tool/package_config</b> 文件中是否为绝对路径
+///- [isSelf] 包名是否为[analyzer_query]项目
+///- [path] 获取一个包的绝对路径
+///- [projPath] 该包所在的实际项目路径
+///- [name] 该包的包名
 class Package {
   final String projPath;
   final String name;
@@ -104,7 +110,7 @@ class Package {
   bool get isThirdLib => _isAbsolutePath;
 
   ///当前包名为当前插件包名
-  bool get isSelf => name == "proj_path";
+  bool get isSelf => name == "analyzer_query";
 
   ///获取到一个包的绝对路径
   String get path {

@@ -4,34 +4,41 @@ import 'package.dart';
 
 typedef DartString = String;
 
+///- [rootDart]是对[ProjectDart]的实例化,它是在[Platform.script]涉及的路径上，
+///寻找最外层具有 <b>.dart_tool</b> 文件夹的Flutter项目
 final ProjectDart rootDart = ProjectDart(rootProj);
 
+///- [mainDart]是对[ProjectDart]的实例化,它是对[Platform.script]所在项目的
+///[Package]信息获取
 final ProjectDart mainDart = ProjectDart(mainProj);
 
-///获取单项目依赖的所有Dart文件，此处会给出三个过滤器：
+///获取单个项目所有依赖的所有Dart文件，此处会给出三个过滤器：
 ///- [Package]过滤器[acceptPack]
+///
 ///为获取项目中的Dart文件，我们会先对[Package]进行搜索，
 ///此过滤器用于排除我们不希望进一步查询的[Package]
 ///
 ///- [DartFile]过滤器[acceptDartFile]
+///
 ///当从[Package]中取得一系列[DartFile]文件后，
 ///此过滤器根据文件的名称对文件进行过滤
 ///
 ///- [DartString]过滤器[acceptDartString]
+///
 ///获取到[DartFile]对应的[String]文件内容后,
 ///此过滤器根据文件内容进行过滤
 ///
 /// ```dart
-///     ProjectDartFile(PackageConfig.fromProj(""))
-///       ..acceptPack = (pack) {
-///         return true;
-///       }
-///       ..acceptDartFile = (file) {
-///         return true;
-///       }
-///       ..acceptDartString = (fileString) {
-///         return true;
-///       };
+///ProjectDartFile(PackageConfig.fromProj("path/to/project"))
+/// ..acceptPack = (pack) {
+///   return true;
+/// }
+/// ..acceptDartFile = (file) {
+///   return true;
+/// }
+/// ..acceptDartString = (fileString) {
+///   return true;
+///};
 /// ```
 class ProjectDart {
   final PackageConfig config;
@@ -102,7 +109,10 @@ class ProjectDart {
   }
 }
 
-///定义一个Dart文件
+///定义Dart文件信息
+///- [package] 文件所在[Package]的基本信息
+///- [filePath] 文件的绝对路径
+///- [fileString]&[latestFileString] 文件的文本内容
 class DartFile {
   final Package package;
   final String filePath;
@@ -129,13 +139,15 @@ class DartFile {
   String get importName =>
       'package:${filePath.replaceAll(package.path, package.name + Platform.pathSeparator).replaceAll(Platform.pathSeparator, '/')}';
 
-  ///获取dart文件代码
+  ///获取dart文件内容
   String get fileString {
     return _fileString ??= File(filePath).readAsStringSync();
   }
 
-  void refresh() {
+  ///始终获取最新的dart文件内容
+  String get latestFileString {
     _fileString = File(filePath).readAsStringSync();
+    return _fileString!;
   }
 }
 
