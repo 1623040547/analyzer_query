@@ -6,6 +6,8 @@ import 'package:analyzer_query/full_visitor.dart';
 import 'package:analyzer_query/mini/log.dart';
 import 'package:analyzer_query/proj_path/dart_file.dart';
 
+export 'package:analyzer/dart/ast/ast.dart';
+
 class TestFile {
   final String _dartString;
 
