@@ -8,18 +8,18 @@ import 'package:analyzer_query/mini/log.dart';
 class TestFile {
   final String _dartString;
 
-  final Function(AstNode)? _visit;
+  final Function(AstNode, TestToken)? _visit;
 
   late final List<TestToken> tokens;
 
-  TestFile._(this._dartString, {dynamic Function(AstNode)? visit})
+  TestFile._(this._dartString, {dynamic Function(AstNode, TestToken)? visit})
       : _visit = visit {
     tokens = _testString(_dartString);
   }
 
   static TestFile fromString(
     String dartString, {
-    Function(AstNode)? visit,
+    Function(AstNode, TestToken)? visit,
   }) {
     return TestFile._(
       dartString,
@@ -29,7 +29,7 @@ class TestFile {
 
   static TestFile fromFile(
     String filePath, {
-    Function(AstNode)? visit,
+    Function(AstNode, TestToken)? visit,
   }) {
     return TestFile._(
       File(filePath).readAsStringSync(),
@@ -54,7 +54,7 @@ class TestFile {
             tokens[id]?._isLeaf = false;
           }
           tokens[token.id] = token;
-          _visit?.call(node);
+          _visit?.call(node, token);
         },
       ),
     );
