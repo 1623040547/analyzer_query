@@ -4,6 +4,7 @@ import 'package:analyzer/dart/analysis/utilities.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer_query/full_visitor.dart';
 import 'package:analyzer_query/mini/log.dart';
+import 'package:analyzer_query/proj_path/dart_file.dart';
 
 class TestFile {
   final String _dartString;
@@ -113,4 +114,13 @@ class TestToken {
 
 extension AstNodeTestTokenId on AstNode {
   String get testId => '${runtimeType}_${offset}_$end';
+
+  TestToken testToken(DartFile file) {
+    return TestToken(
+      start: offset,
+      end: end,
+      name: file.fileString.substring(offset, end),
+      type: runtimeType,
+    );
+  }
 }

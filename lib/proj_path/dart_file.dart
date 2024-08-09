@@ -109,6 +109,8 @@ class DartFile {
 
   DartFile(this.package, this.filePath);
 
+  String? _fileString;
+
   ///文件全名
   String get fullName => Uri.parse(filePath).pathSegments.last;
 
@@ -129,11 +131,11 @@ class DartFile {
 
   ///获取dart文件代码
   String get fileString {
-    try {
-      return File(filePath).readAsStringSync();
-    } catch (e) {
-      return "";
-    }
+    return _fileString ??= File(filePath).readAsStringSync();
+  }
+
+  void refresh() {
+    _fileString = File(filePath).readAsStringSync();
   }
 }
 
