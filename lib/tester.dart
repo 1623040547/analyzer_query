@@ -7,6 +7,7 @@ import 'package:analyzer_query/mini/log.dart';
 import 'package:analyzer_query/proj_path/dart_file.dart';
 
 export 'package:analyzer/dart/ast/ast.dart';
+export 'package:dart_style/dart_style.dart';
 
 class TestFile {
   final String _dartString;
@@ -103,8 +104,9 @@ class TestToken {
 
   bool get isLeaf => _isLeaf;
 
-  String get nodeType =>
-      type.toString().substring(0, type.toString().length - 4);
+  String get nodeType => type.toString().endsWith('Impl')
+      ? type.toString().substring(0, type.toString().length - 4)
+      : type.toString().substring(0);
 
   TestToken({
     required this.start,
